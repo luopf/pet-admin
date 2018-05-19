@@ -1,0 +1,115 @@
+{extend name="./static/page/admin_tpl.html" /}
+
+{block name="header_title"}大话软件后台{/block}
+
+{block name="page_css"}
+<link href="{$__TEMPLETE__}/css/admin/comment/commentList.css" rel="stylesheet">
+{/block}
+{block name="content"}
+<div class="col-md-12 right-section">
+    <!--内容区域-->
+    <h3>评论列表
+    </h3>
+    <div class="inner-section row">
+        <!--查询区域-->
+        <div class="search-param-panel">
+            <table  border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="80px">
+                        <label for="nick_name">用户昵称:&nbsp;</label>
+                    </td>
+                    <td width="140px">
+                        <input id="nick_name" name="nick_name" type="text" class="input-normal search"  />
+                    </td>
+                    <td width="80px">
+                        <label for="level">评价等级:&nbsp;</label>
+                    </td>
+                    <td width="140px">
+                        <select class="select-normal" id="level" name="level">
+                            <option value="">全部</option>
+                            <option value="1">好评</option>
+                            <option value="2">中评</option>
+                            <option value="3">差评</option>
+                        </select>
+                    </td>
+                    <td width="80px">
+                        <label for="is_reply">是否回复:&nbsp;</label>
+                    </td>
+                    <td width="140px">
+                        <select class="select-normal" id="is_reply" name="is_reply">
+                            <option value="">全部</option>
+                            <option value="0">未回复</option>
+                            <option value="1">已回复</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="80px">
+                        <label for="has_image">有无图片:&nbsp;</label>
+                    </td>
+                    <td width="140px">
+                        <select class="select-normal" id="has_image" name="has_image">
+                            <option value="">全部</option>
+                            <option value="1">有</option>
+                            <option value="0">无</option>
+                        </select>
+                    </td>
+                    <td width="80px">
+                        <label for="is_see_name">是否匿名:&nbsp;</label>
+                    </td>
+                    <td width="140px">
+                        <select class="select-normal" id="is_anonym" name="is_anonym">
+                            <option value="">全部</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </td>
+                    <td width="80px">
+                        <label for="startTime">评论时间:&nbsp;</label>
+                    </td>
+                    <td width="140px">
+                        <input id="startTime" name="startTime" type="text" class="input-normal search Wdate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+                    </td>
+                    <td width="40px">
+                        <label for="endTime">至:</label>
+                    </td>
+                    <td width="140px">
+                        <input id="endTime" name="endTime" type="text" class="input-normal search Wdate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+                    </td>
+
+                    <td>
+                        <div class="list-action-area">
+                            <a href="javascript:;" class="search-button btn btn-primary btn-sm">查询</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="list-title">
+            <div class="list-title-panel">
+                <span class="glyphicon glyphicon-list"></span>列表</span>
+                <input type="hidden" name="ids" id="ids" value="">
+            </div>
+        </div>
+        <div class="union-operate">
+            <a href="javascript:;" class="btn btn-default btn-sm delete-batch">批量删除</a>
+            <a href="javascript:;" class="btn btn-default btn-sm replybatch">统一回复</a>
+        </div>
+        <div class="item table-responsive">
+            <table id="list-table" class="list-table table table-striped table-hover table-bordered table-base">
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <!--分页-->
+        <div id="page-selection"></div>
+    </div>
+</div>
+
+
+
+{/block}
+{block name="page_js"}
+<script src="{$__TEMPLETE__}/js/admin/comment/commentList.js"></script>
+<script src="{$__PUBLIC__}/jquery.bootpag/jquery.bootpag.min.js"></script>
+{/block}

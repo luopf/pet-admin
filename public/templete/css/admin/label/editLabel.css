@@ -1,0 +1,21 @@
+.page-wrap{
+    padding: 0;
+}
+.td1{
+    width: 20%;
+}
+.td2{
+    width: 50%;
+}
+.td3 {
+    width: 30%;
+}
+.form .table-base td input[type='file']{
+
+    padding: 4px 5px !important;
+    font-size: 12px !important;
+}
+.form-control{
+    padding: 4px 5px !important;
+    font-size: 12px !important;
+}

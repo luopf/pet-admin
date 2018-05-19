@@ -1,0 +1,137 @@
+{extend name="./static/page/admin_tpl.html" /}
+
+{block name="header_title"}大话软件后台{/block}
+
+{block name="page_css"}
+<link href="{$__TEMPLETE__/css/admin/order/orderList.css}"/>
+{/block}
+{block name="content"}
+<div class="col-md-10 right-section">
+    <!--内容区域-->
+    <h3>
+        <div class="operation-div">
+            <a href="javascript:;" id ='import_btn' class="btn btn-success">导出订单</a>
+        </div>
+    </h3>
+    <div class="inner-section row">
+        <div id="content">
+            <div class="search-param-panel">
+                <form class="search-param-form" id="search-param-form">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="80">
+                                <label for="nick_name">用户名:&nbsp;</label>
+                            </td>
+                            <td width="140">
+                                <input id="nick_name" name="nick_name" type="text" class="input-normal search"  />
+                            </td>
+                            <td width="80">
+                                <label for="ordernum">订单编号:&nbsp;</label>
+                            </td>
+                            <td width="140">
+                                <input id="ordernum" name="ordernum" type="text" class="input-normal search"  />
+                            </td>
+                            <td width="80">
+                                <label for="orderstatus">订单状态:&nbsp;</label>
+                            </td>
+                            <td width="140">
+                                <select id="orderstatus" name="orderstatus" class="select-normal">
+                                    <option value="">全部</option>
+                                    <option value="0">待付款</option>
+                                    <option value="1">已发布</option>
+                                    <option value="2">未审核 </option>
+                                    <option value="3">已审核 </option>
+                                    <option value="4">已过期 </option>
+                                </select>
+                            </td>
+                            <td width="80">
+                                <label for="pay_method">支付方式:&nbsp;</label>
+                            </td>
+                            <td width="140">
+                                <select id="pay_method" name="pay_method" class="select-normal">
+                                    <option value="">全部</option>
+                                    <option value="0">未选择</option>
+                                    <option value="1">微信支付</option>
+                                    <option value="3">货到付款</option>
+                                    <option value="4">余额支付</option>
+                                </select>
+                            </td>
+                            <td width="80">
+                                <label for="order_type">订单类型：</label>
+                            </td>
+                            <td>
+                                <select id="order_type" name="order_type" class="select-normal">
+                                    <option value="">全部</option>
+                                    <option value="0">原始订单</option>
+                                    <option value="1">续费订单</option>
+                                </select>
+                            </td>
+
+
+                        <tr>
+                            <td width="80">
+                                <label for="put_into">投放区域:&nbsp;</label>
+                            </td>
+                            <td width="140">
+                                <input id="put_into" name="put_into" type="text" class="input-normal search"  />
+                            </td>
+                            <td width="80">
+                                <label for="address">收货地址:&nbsp;</label>
+                            </td>
+
+                            <td width="140">
+                                <input id="address" name="address" type="text" class="input-normal search"  />
+                            </td>
+                            <td width="80">
+                                <label for="startTime">创建时间:&nbsp;</label>
+                            </td>
+                            <td>
+                                <input id="startTime" name="startTime" type="text" class="input-normal search Wdate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+                            </td>
+                            <td width="40">
+                                <label for="endTime">至:</label>
+                            </td>
+                            <td  width="140">
+                                <input id="endTime" name="endTime" type="text" class="input-normal search Wdate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+                            </td>
+
+                            <td>
+                                <div class="search-button">
+                                    <div class="list-action-area">
+                                        <a href="javascript:;" id ='search_btn' class="btn btn-primary btn-sm">查询</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="list-title">
+                <div class="list-title-panel">
+                    <span class="glyphicon glyphicon-list"></span>列表</span>
+                </div>
+            </div>
+            <div class="union-operate">
+                <a href="javascript:;" class="btn btn-default btn-sm delete-batch">批量删除</a>
+            </div>
+            <div class="table-content" id = "list_container">
+                <table id="list-table" class="list-table table-hover table-bordered" cellspacing="0" cellpadding="0" border="0" width="100%" align="center">
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <!--分页信息-->
+            <div id="page-selection"></div>
+            <div class="fn-clear"></div>
+
+            <!-- 列表底部 -->
+            <div class="list-bottom">
+                <div class="list-bottom-panel">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

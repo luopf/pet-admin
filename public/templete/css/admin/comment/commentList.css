@@ -1,0 +1,82 @@
+.right-section #list-table .th1{
+    width:25px;
+}
+.right-section #list-table .th2{
+    width: 45px;
+}
+.right-section #list-table .th4{
+    width: 120px;
+}
+.right-section #list-table .th5,.th6{
+    width: 45px;
+}
+
+.right-section #list-table .th9{
+    width: 45px;
+}
+.right-section #list-table .th8{
+    width: 137px;
+}
+.right-section #list-table .th10{
+    width: 80px;
+}
+.right-section #list-table .th11{
+    width: 150px;
+}
+#myReplyModal .modal-body .info{
+	margin-top:10px;
+	width:100%;
+    border: 1px solid #DDDDDD;
+	height:100px;
+	resize:none;
+}
+#myCheckModal .modal-body .text-button{
+	margin:10px 0;
+}
+.inner-section .list-title .replybatch{
+	float:right;
+	margin-right:10px;
+}
+.inner-section .list-title .deletebatch{
+	float:right;
+}
+.limitName{
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+}
+#paging-mode{
+    display: none;
+}
+.btn{
+    padding: 1px 5px !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    border-radius: 3px !important;
+}
+#myReplyModal .modal-body .info{
+    margin-top:10px;
+    width:100%;
+    border: 1px solid #DDDDDD;
+    height:100px;
+    resize:none;
+}
+#myCheckModal .modal-body .text-button{
+    margin:10px 0;
+}
+.inner-section .list-title .replybatch{
+    float:right;
+    margin-right:10px;
+}
+.inner-section .list-title .deletebatch{
+    float:right;
+}
+.limitName{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+}
