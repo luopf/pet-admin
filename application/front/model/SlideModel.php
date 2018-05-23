@@ -25,7 +25,7 @@ class SlideModel extends Model
      * @param array $sort
      * @return array $result
      */
-    public function findAllSlide($conditions,$sort){
+    public function findAllSlide($conditions=null,$sort=null){
         $m_slide = Db::name('base_slide');
         try{
             $result = $m_slide->where($conditions)->select();

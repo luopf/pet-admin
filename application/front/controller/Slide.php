@@ -11,6 +11,7 @@ namespace app\front\controller;
 
 use think\Controller;
 
+use app\front\model\SlideModel;
 class Slide extends Controller
 {
 
@@ -22,6 +23,14 @@ class Slide extends Controller
 
         $this->lib_slide = new SlideModel();
 
+    }
+
+    /***
+    * 获取所有幻灯片
+     */
+    public function getAllSlide(){
+        $result = $this->lib_slide->findAllSlide();
+        echo json_encode($result);
     }
 
 }
