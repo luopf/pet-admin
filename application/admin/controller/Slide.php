@@ -39,7 +39,24 @@ class Slide extends BaseAdminController
         $this->assign(config('config.view_replace_str'));
         return $this->fetch("slideList");
     }
+    /**
+    *  删除幻灯片
+     */
+    public function deleteSlide(){
+        $id = input('id');
+        $config = config('config.view_replace_str');
+        $__LOD__ = $config['__LOD__'];
+        $slide = $this->lib_slide->findSlide(array('id'=>$id));
+        if($slide['errorCode'] == 0){
+            $img_url = $__LOD__.$slide['data']['img_url'];
+            @unlink($img_url);
+            $thumb = $__LOD__.$slide['data']['thumb'];
+            @unlink($thumb);
+        }
+        $result = $this->lib_slide->deleteSlide(array('id'=>$id));
+        echo json_encode($result);
 
+    }
     /**
      * 编辑幻灯片页面
      */

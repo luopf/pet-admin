@@ -70,7 +70,7 @@ class MessageModel extends  Model
         $m_message = Db::name('store_message');
         try{
             $result = $m_message->where($conditions)->update ($messageInfo );
-            \ChromePhp::info($m_message->getLastSql());
+
             if(true == $result){
                 return \common::errorArray(0, "修改成功", $result);
             }else{

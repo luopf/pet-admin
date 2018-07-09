@@ -1,0 +1,81 @@
+{extend name="./static/page/admin_tpl.html" /}
+
+{block name="header_title"}大话软件后台{/block}
+
+{block name="page_css"}
+<link href="{$__TEMPLETE__}/css/admin/petAticle/editSlide.css" rel="stylesheet">
+{/block}
+{block name="content"}
+<div class="col-md-12 right-section">
+    <!--内容区域-->
+    <h3>
+        幻灯片编辑
+        <div class="operation-div">
+
+        </div>
+    </h3>
+    <div class="inner-section row">
+        <div id="content">
+            <form action="#" method="post" id="myForm"  enctype="multipart/form-data">
+                <table class="table table-striped table-hover table-bordered table-base">
+                    <tr>
+                        <td class="td1"><label><span class="must-tag">*</span>名称</label></td>
+                        <td class="td2"><input type="text" class="form-control" id="name" name="name" value="{$slideInfo.name}" placeholder="幻灯片名称"></td>
+                        <td class="td3"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="td1"><label><span class="must-tag">&nbsp;&nbsp;</span>缩略图</label></td>
+                        <td class="td2"><img src="{$__LOD__.$slideInfo.thumb}" height="40"></td>
+                        <td class="td3"></td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="imgurl"><span class="must-tag">&nbsp;&nbsp;</span>图片更新</label></td>
+                        <td>
+                            <input type="hidden" name="prevurl" value="{$slideInfo.img_url}">
+                            <!---是否重新上传图片标识 0未更新，1更新图片-->
+                            <input type="hidden" id="imgFlag" name="imgFlag" value="0">
+                            <input class="imgurl form-control" accept="image/*" title="支持jpg、jpeg、gif、png格式，文件小于5M" tabindex="3" type="file" id="imgurl" name="imgurl" size="3">
+                        </td>
+                        <td>建议尺寸：640px*350px</td>
+                    </tr>
+                    <tr>
+                        <td><label for="url"><span class="must-tag">&nbsp;&nbsp;</span>链接地址</label></td>
+                        <td><input type="text" class="form-control" name="url" id="url" value="{$slideInfo.url}" placeholder=""></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><label><span class="must-tag">&nbsp;&nbsp;</span>打开方式</label></td>
+                        <td>
+                            <label> <input type="radio" name="target" value="1" {if $slideInfo.target eq 1}checked{/if}>本页刷新</label>
+                            <label> <input type="radio" name="target" value="0" {if $slideInfo.target eq 0}checked{/if}>新开窗口</label>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><label for="sort"><span class="must-tag">&nbsp;&nbsp;</span>排序系数</label></td>
+                        <td><input type="text" class="form-control" name="sort" id="sort" placeholder="排序系数" value="{$slideInfo.sort}"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+                            <input type="hidden" name="id" value="{$slideInfo.id}">
+                            <input type="hidden" name="type" value="{$slideInfo.type}">
+                            <button type="button" class="btn btn-success btn-md" id='save'>提交</button>
+                            <a class="btn btn-default btn-md" href="javascript:window.history.go(-1);">返回</a>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="page_js"}
+<script src="{$__TEMPLETE__}/js/admin/petAticle/editSlide.js"></script>
+{/block}

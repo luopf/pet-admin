@@ -51,7 +51,14 @@ class Comment extends  BaseAdminController
         echo json_encode($result);
     }
 
-
+    /**
+    *   删除评论
+     */
+    function deleteComment(){
+        $id = input('id');
+        $result = $this->lib_comment->deleteComment(array('id'=>$id));
+        echo json_encode($result);
+    }
     /**
      * 评价详情页面
      */

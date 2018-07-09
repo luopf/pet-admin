@@ -54,10 +54,9 @@ $(function(){
             geoc.getLocation(e.point, function(rs){
                 var addComp = rs.addressComponents;
                 //alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
-                var content_text = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
-
+                var content_text =  addComp.city + '·' +addComp.district + addComp.street + addComp.streetNumber;
                 $("#address_text").val(content_text);
-
+                console.log(rs);
                 $("#longitude").val(e.point.lng);
                 $("#latitude").val(e.point.lat);
                 console.log(e.point.lng);

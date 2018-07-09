@@ -38,6 +38,16 @@ class Login extends  BaseAdminController
         return $this->fetch("login");
     }
 
+    /**
+    *   管理员退出登录
+     */
+    function adminLoginOut(){
+        session_destroy();
+        $_SESSION['admin'] = null;
+
+        $this->success('退出登录正在跳转','admin/login/login',null,1);
+    }
+
 
     /**
      * 管理员登录

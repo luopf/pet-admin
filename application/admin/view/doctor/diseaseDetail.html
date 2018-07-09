@@ -1,0 +1,146 @@
+{extend name="./static/page/admin_tpl.html" /}
+
+{block name="header_title"}大话软件后台{/block}
+{block name="page_css"}
+<link href="{$__TEMPLETE__}/css/admin/doctor/diseaseDetail.css" rel="stylesheet">
+{/block}
+{block name="content"}
+<div class="col-md-12 right-section">
+    <!--内容区域-->
+    <h3><i class="icon iconfont">宠物医生病历单
+        <div class="operation-div">
+            <a class="btn btn-default" href="javascript:window.history.go(-1);">返回</a>
+        </div>
+    </h3>
+    <div class="inner-section row">
+        <div id="content">
+            <form action="#" method="post" id="myForm"  enctype="multipart/form-data">
+                <input type="hidden" name="oid" class="oid" value="{$message.id}">
+                <table class="table table-striped table-hover table-bordered table-base">
+                    <tr>
+                        <td class="td1"><label><span class="must-tag">*</span>发布者姓名</label></td>
+                        <td class="td2">
+                            {$diseaseInfo.user_name}
+
+                        </td>
+                        <td class="td3"></td>
+                    </tr>
+                    <tr>
+                        <td class="td1"><label><span class="must-tag">*</span>联系电话</label></td>
+                        <td class="td2">
+                            {$diseaseInfo.phone}
+
+                        </td>
+                        <td class="td3"></td>
+                    </tr>
+                    <tr>
+                        <td class="td1"><label><span class="must-tag">*</span>微信号码</label></td>
+                        <td class="td2">
+                            {$diseaseInfo.wx_number}
+
+                        </td>
+                        <td class="td3"></td>
+                    </tr>
+                    <tr>
+                        <td class="td1"><label><span class="must-tag">*</span>宠物品种</label></td>
+                        <td class="td2">
+                            {$diseaseInfo.cate_name}
+
+                        </td>
+                        <td class="td3"></td>
+                    </tr>
+                    <tr>
+                        <td class="td1"><label><span class="must-tag">*</span>宠物生日</label></td>
+                        <td class="td2">
+
+                            {$diseaseInfo.birthday}
+                        </td>
+                        <td class="td3"></td>
+                    </tr>
+                    <tr>
+                    <td class="td1"><label><span class="must-tag">*</span>宠物性别</label></td>
+                    <td class="td2">
+                        {if $diseaseInfo.sex == 0}
+                        公
+                        {else}
+                        母
+                        {/if}
+                    </td>
+                    <td class="td3"></td>
+                    </tr>
+                    <tr>
+                        <td class="td1"><label><span class="must-tag">*</span>宠物是否绝育</label></td>
+                        <td class="td2">
+                            {if $diseaseInfo.sterilisate == 0}
+                            是
+                            {else}
+                           否
+                            {/if}
+                        </td>
+                        <td class="td3"></td>
+                    </tr>
+                    <tr>
+                        <td class="td1"><label><span class="must-tag">*</span>上次免疫时间</label></td>
+                        <td class="td2">
+                            {$diseaseInfo.last_immunedate}
+                        </td>
+                        <td class="td3"></td>
+                    </tr>
+                    <tr>
+                    <td class="td1"><label><span class="must-tag">*</span>上次驱虫时间</label></td>
+                    <td class="td2">
+                        {$diseaseInfo.last_repellantdate}
+                    </td>
+                    <td class="td3"></td>
+                </tr>
+                    <tr>
+                        <td class="td1"><label><span class="must-tag">*</span>精神，食欲以及吃喝拉撒是否正常</label></td>
+                        <td class="td2">
+                            {if $diseaseInfo.eat == 0}
+                            正常
+                            {else}
+                            异常
+                            {/if}
+                        </td>
+                        <td class="td3"></td>
+                    </tr>
+                    <tr>
+                        <td class="td1"><label><span class="must-tag">*</span>具体病情描述</label></td>
+                        <td class="td2">
+                           {$diseaseInfo.content}
+                        </td>
+                        <td class="td3"></td>
+                    </tr>
+                    <tr>
+                        <td class="td1"><label><span class="must-tag">*</span>宠物照片</label></td>
+                        <td class="td2">
+                            {foreach $diseaseInfo.img_list as $img}
+                                <img src="{$__LOD__.$img.thumb}">
+                            {/foreach}
+
+                        </td>
+                        <td class="td3"></td>
+                    </tr>
+
+
+                    <tr>
+                        <td></td>
+                        <td>
+
+
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="page_js"}
+<script src="{$__TEMPLETE__}/js/admin/doctor/diseaseDetail.js"></script>
+<!-- jsfiles -->
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=E8585e29607347015477b67178b530ab"></script>
+{/block}

@@ -7,7 +7,7 @@ use app\admin\model\store\MessageModel;
 use  app\admin\model\store\LabelModel;
 use think\facade\Session;
 use app\admin\controller\BaseAdminController;
-
+use app\admin\model\store\NewsModel;
 
 /**
  * 订单管理
@@ -32,6 +32,7 @@ class Message extends BaseAdminController{
         $this->rightVerify(Session::get('admin'), __HOST__."/index.php/admin/login/login");
 	    $this->lib_message = new MessageModel();
 	    $this->lib_label = new LabelModel();
+	    $this->lib_new = new NewsModel();
 	}
 	
 	/**
@@ -168,7 +169,7 @@ class Message extends BaseAdminController{
             'id' => $id
         );
 
-        $messageInfo = $this->getArgsList($this,array('label_id','nick_name','phone','address_text','text_content','check_num','message_num','like_num','longitude','latitude','address_text'));
+        $messageInfo = $this->getArgsList($this,array('label_id','nick_name','phone','wx_number','address_text','text_content','check_num','message_num','like_num','longitude','latitude','address_text'));
         if(input('label_id') != null && input('label_id') != ''){
             $label = $this->lib_label->findLabel(array('id'=>input('label_id')));
             $messageInfo['label_name'] = $label['data']['name'];
@@ -176,7 +177,8 @@ class Message extends BaseAdminController{
 
 
             $messageInfo['img_list'] = json_encode($oldImgArr);
-
+            $messageInfo['add_time'] = \common::getTime();
+            $messageInfo['time_desc'] = \common::getDescTime();
 	    $result = $this->lib_message->updateMessage($conditions,$messageInfo);
 	    echo json_encode($result);
 	}
@@ -187,13 +189,13 @@ class Message extends BaseAdminController{
         $labelData = $this->lib_label->findAllLabel();
 
         if (input('id')!= null || input('id')!= ''){
-            $conditions['id'] = input('mid');
+            $conditions['id'] = input('id');
         }
 
         if (input('mid')!= null || input('mid')!= ''){
             $conditions['mess_num'] = input('mid');
         }
-        \ChromePhp::INFO($conditions);
+
 	    $messageData =  $this->lib_message->findMessage($conditions);
 	    if($messageData['data']['img_list']){
             $messageData['data']['img_list'] = json_decode($messageData['data']['img_list'],true);
@@ -245,6 +247,7 @@ class Message extends BaseAdminController{
 	function setMessageState(){
 		$state = input('state');
 	    $id = input('oid');
+	    $messagedetail = $this->lib_message->findMessage(array('id'=>$id));
         $conditions = array(
             'id' => $id
 
@@ -254,6 +257,25 @@ class Message extends BaseAdminController{
 
         );
 		$result = $this->lib_message->updateMessage($conditions,$messageInfo);
+        if($result['errorCode'] == 0){
+            if($state == 1){ // 审核通过
+                $newsInfo['user_id'] = $messagedetail['data']['user_id'];
+                $newsInfo['account'] = $messagedetail['data']['account'];
+                $newsInfo['type'] = 2;
+                $newsInfo['add_time'] = \common::getTime();
+                $newsInfo['time_desc'] = \common::getDescTime();
+                $result = $this->lib_new->addNew($newsInfo);
+            } elseif ($state == 2){// 审核失败
+                $newsInfo['user_id'] = $messageInfo['data']['user_id'];
+                $newsInfo['account'] = $messageInfo['data']['account'];
+                $newsInfo['type'] = 2;
+                $newsInfo['status'] = 1;
+                $newsInfo['add_time'] = \common::getTime();
+                $newsInfo['time_desc'] = \common::getDescTime();
+                $result = $this->lib_new->addNew($newsInfo);
+            }
+
+        }
 		echo json_encode($result);
 	}
 	
@@ -298,30 +320,30 @@ class Message extends BaseAdminController{
 	    $page = $this->getPageInfo($this);
 		$sort = "add_time desc";
         $conditionList = [];
-        if(input('mess_num') != '' || input('mess_num') != null){
+        if(input('mess_num') != '' && input('mess_num') != null){
             array_push($conditionList,  array("field" => 'mess_num',"operator" => 'like',"value" => input('mess_num')));
         }
-        if(input('nick_name') !== '' || input('nick_name') != null){
+        if(input('nick_name') !== '' && input('nick_name') != null){
             array_push($conditionList,  array("field" => 'nick_name',"operator" => 'like',"value" => input('nick_name')));
         }
-        if(input('phone') !== '' || input('phone') != null){
+        if(input('phone') !== '' && input('phone') != null){
             array_push($conditionList,  array("field" => 'phone',"operator" => '=',"value" => input('phone')));
         }
-        if(input('label_name') !== '' || input('label_name') != null){
+        if(input('label_name') !== '' && input('label_name') != null){
             array_push($conditionList,  array("field" => 'label_name',"operator" => 'like',"value" => input('label_name')));
         }
-        if(input('state') !== '' || input('state') != null){
+        if(input('state') !== '' && input('state') != null){
             array_push($conditionList,  array("field" => 'state',"operator" => '=',"value" => input('state')));
         }
 
-        if(input('address_text') !== '' || input('address_text') != null){
+        if(input('address_text') !== '' && input('address_text') != null){
             array_push($conditionList,  array("field" => 'address_text',"operator" => 'like',"value" => input('address_text')));
         }
 
-        if(input('from') !== '' || input('from') != null){
+        if(input('from') !== ''&& input('from') != null){
             array_push($conditionList,  array("field" => 'add_time',"operator" => '>=',"value" => input('from')));
         }
-        if(input('to') !== '' || input('to') != null){
+        if(input('to') !== '' && input('to') != null){
             array_push($conditionList,  array("field" => 'end_time',"operator" => '<=',"value" => input('end_time')));
         }
 

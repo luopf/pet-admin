@@ -22,6 +22,26 @@ class CommentModel extends Model
         return strip_tags($value);
     }
 
+
+    /**
+    *删除评论
+     */
+    public function deleteComment($conditions){
+        $m_comment = Db::name('store_comment');
+        try{
+            $result = $m_comment->where($conditions)->delete();
+
+            if(true == $result){
+                return \common::errorArray(0, "删除成功", $result);
+            }else{
+                return \common::errorArray(1, "删除失败", $result);
+            }
+        }catch (Exception $ex){
+
+            return  \common::errorArray(1, "数据库操作失败",$ex);
+        }
+    }
+
     /**
      * 分页查找评论
      * @param array $page

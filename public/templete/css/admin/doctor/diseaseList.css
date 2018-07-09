@@ -1,0 +1,54 @@
+#list-table .th1{
+    width:40px;
+}
+#list-table .th2{
+    width: 80px;
+}
+#list-table .th2 a,#list-table .th3 a{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+}
+#list-table .th3{
+    width: 120px;
+}
+#list-table .th4{
+    width:80px;
+}
+#list-table .th5{
+    width: 100px;
+}
+#list-table .th6 span,#list-table .th11 span{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+}
+#list-table .th7{
+    width: 70px;
+}
+#list-table .th8{
+    width: 420px;
+}
+#list-table .th9{
+    width: 150px;
+}
+#list-table .th10{
+    width: 300px;
+}
+#list-table .th11{
+   width: 80px;
+}
+#list-table .th12{
+   width: 65px;
+}
+.form-control{
+    padding: 4px 5px !important;
+    font-size: 12px !important;
+}
+#paging-mode{
+    display: none;
+
+}

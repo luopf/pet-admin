@@ -1,0 +1,103 @@
+{extend name="./static/page/admin_tpl.html" /}
+
+{block name="header_title"}大话软件后台{/block}
+
+{block name="page_css"}
+<link href="{$__TEMPLETE__}/css/admin/doctor/diseaseList.css" rel="stylesheet">
+{/block}
+{block name="content"}
+<div class="col-md-10 right-section">
+    <!--内容区域-->
+    <h3>
+        发布列表
+        <!--<div class="operation-div">-->
+        <!--<a href="javascript:;" id ='import_btn' class="btn btn-success">导出订单</a>-->
+        <!--</div>-->
+    </h3>
+    <div class="inner-section row">
+        <div id="content">
+            <div class="search-param-panel">
+                <form class="search-param-form" id="search-param-form">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="50px">
+                                <label for="user_name">用户名:&nbsp;</label>
+                            </td>
+                            <td width="140">
+                                <input id="user_name" name="user_name" type="text" class="input-normal search"  />
+                            </td>
+                            <td width="80">
+                                <label for="phone">联系电话:&nbsp;</label>
+                            </td>
+                            <td width="140">
+                                <input id="phone" name="phone" type="text" class="input-normal search"  />
+                            </td>
+                            <td width="80">
+                                <label for="cate_name">宠物品种:&nbsp;</label>
+                            </td>
+                            <td width="140">
+                                <input id="cate_name" name="cate_name" type="text" class="input-normal search"  />
+                            </td>
+
+
+
+
+                        <tr>
+                            <td width="80">
+                                <label for="startTime">创建时间:&nbsp;</label>
+                            </td>
+                            <td>
+                                <input id="startTime" name="startTime" type="text" class="input-normal search Wdate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+                            </td>
+                            <td width="40">
+                                <label for="endTime">至:</label>
+                            </td>
+                            <td  width="140">
+                                <input id="endTime" name="endTime" type="text" class="input-normal search Wdate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+                            </td>
+
+                            <td>
+                                <div class="search-button">
+                                    <div class="list-action-area">
+                                        <a href="javascript:;" id ='search_btn' class="btn btn-primary btn-sm">查询</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="list-title">
+                <div class="list-title-panel">
+                    <span class="glyphicon glyphicon-list"></span>列表</span>
+                </div>
+            </div>
+            <div class="union-operate">
+                <a href="javascript:;" class="btn btn-default btn-sm delete-batch">批量删除</a>
+            </div>
+            <div class="table-content" id = "list_container">
+                <table id="list-table" class="list-table table-hover table-bordered" cellspacing="0" cellpadding="0" border="0" width="100%" align="center">
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <!--分页信息-->
+            <div id="page-selection"></div>
+            <div class="fn-clear"></div>
+
+            <!-- 列表底部 -->
+            <div class="list-bottom">
+                <div class="list-bottom-panel">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="page_js"}
+<script src="{$__TEMPLETE__}/js/admin/doctor/diseaseList.js"></script>
+<script src="{$__PUBLIC__}/jquery.bootpag/jquery.bootpag.min.js"></script>
+{/block}

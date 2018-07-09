@@ -21,7 +21,7 @@ $(function(){
             var id = _this.attr('sid');
             myConfirmModal("确认删除吗？",function(){
                 $.ajax({
-                    url:host+'/index.php/admin/Slide/updateSlide' ,
+                    url:host+'/index.php/admin/Slide/deleteSlide' ,
                     type:'post',
                     data:{id:id},
                     dataType:'json',

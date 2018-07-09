@@ -1,0 +1,81 @@
+ {extend name="./static/page/admin_tpl.html" /}
+
+{block name="header_title"}大话软件后台{/block}
+
+{block name="page_css"}
+<link href="{$__TEMPLETE__}/css/admin/petAticle/labelList.css" rel="stylesheet">
+{/block}
+{block name="content"}
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12 right-section">
+            <!--内容区域-->
+            <div class="head-top">
+                <h3>商品标签</h3>
+                <div class="operation-div">
+                    <a class="btn btn-success" href="{:url('admin/Petaticle/addLabel');}">添加</a>
+                </div>
+            </div>
+
+
+            <div class="inner-section row">
+                <div id="content">
+                    <div class="list-title">
+                        <div class="list-title-panel">
+                            <span class="glyphicon glyphicon-list"></span>列表</span>
+                        </div>
+
+                    </div>
+                    <div class="table-content" id = "list_container">
+                        <table id="list-table" class="list-table table-hover table-bordered" cellspacing="0" cellpadding="0" border="0" width="100%" align="center">
+                            <tbody>
+                            <tr>
+                                <th>缩略图</th>
+                                <th>标签名称</th>
+                                <th>排序系数</th>
+                                <th>操作</th>
+                            </tr>
+                            {if $labelList}
+                            {volist name="labelList" id="label"}
+
+
+                            <tr>
+                                <td>{if $label.thumb}<img src="{$__LOD__.$label.thumb}" height="50">{else/}无<{/if}</td>
+                                <td>{$label.name}</td>
+                                <td>{$label.order_index}</td>
+                                <td>
+                                    {if $label.gids}
+                                    <a class="btn btn-primary btn-xs" href="">查看商品集</a>
+                                    {/if}
+                                    <a class="btn btn-xs btn-primary" href="{:url('admin/Petaticle/editLabel',['id'=>$label.id]);}" target="_self">编辑</a>
+                                    <a class="btn btn-xs btn-default delete" data-id="{$label.id}">删除</a>
+                                </td>
+                            </tr>
+
+                            {/volist}
+                            {else/}
+                            <tr><td colspan="4"><p class="text-danger">暂时无数据。</p></td></tr>
+                            {/if}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="fn-clear"></div>
+                    <!-- 列表底部 -->
+                    <div class="list-bottom">
+                        <div class="list-bottom-panel">
+                        </div>
+                    </div>
+
+                </div>
+                <!--分页-->
+                <div id="page-selection"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="page_js"}
+<script src="{$__TEMPLETE__}/js/admin/petAticle/labelList.js"></script>
+{/block}

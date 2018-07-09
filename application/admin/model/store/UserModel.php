@@ -19,6 +19,25 @@ class UserModel extends Model
 
 
     /**
+    *添加用户
+     */
+    public function addUser($userInfo){
+        $m_user = Db::name('base_user');
+        try{
+            $result = $m_user->insert($userInfo);
+            if(true == $result ){
+                return \common::errorArray(0, "插入成功", $result);
+            }else{
+                return \common::errorArray(1, "插入失败", $result);
+            }
+        }catch (Exception $ex){
+
+            return  \common::errorArray(1, "数据库操作失败",$ex);
+        }
+    }
+
+
+    /**
      * 获取用户信息
      * @param array $conditions
      * @return array $result

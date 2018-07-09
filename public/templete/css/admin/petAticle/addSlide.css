@@ -1,0 +1,24 @@
+#myForm table td:first-child label{
+    color: #666666;
+}
+#myForm table .td1{
+    width: 100px;
+}
+#myForm table .td2{
+    width: 780px;
+}
+#myForm .addGrounp-button{
+    width: 80px;
+}
+#myForm select{
+    width: 150px;
+    padding: 0;
+    margin-right: 10px;
+}
+td label{
+    line-height: 34px;
+}
+.form-control{
+    padding: 4px 5px !important;
+    font-size: 12px !important;
+}

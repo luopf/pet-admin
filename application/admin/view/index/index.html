@@ -1,6 +1,11 @@
 {extend name="./static/page/admin_tpl.html" /}
 
 {block name="header_title"}大话软件后台{/block}
+{block name="page_css"}
+<link href="{$__TEMPLETE__}/css/admin/index/index.css" rel="stylesheet">
+{/block}
 {block name="content"}
-<div>欢迎使用宠物救援后台管理系统！</div>
+<div class="content">
+    <img src="{$__IMG__}/home.jpg">
+</div>
 {/block}
