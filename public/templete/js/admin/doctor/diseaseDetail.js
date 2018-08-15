@@ -19,8 +19,6 @@ $(function(){
     function setMap(keyword){
         var longitude = $("#longitude").val();
         var latitude = $("#latitude").val();
-        console.log(longitude);
-        console.log(latitude);
         // 百度地图API功能
         var map = new BMap.Map("allmap");
         if(longitude == '' || latitude == ''){

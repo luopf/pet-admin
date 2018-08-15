@@ -156,6 +156,25 @@ class CommentModel extends Model
         }
     }
 
+    /**
+     * 添加评论
+     */
+    public  function  addComment($commentInfo){
+        $m_comment = Db::name('store_comment');
+        try{
+            $result = $m_comment->insert($commentInfo);
+            if(true == $result){
+                return \common::errorArray(0, "添加成功", $result);
+            }else{
+                return \common::errorArray(1, "添加失败", $result);
+            }
+        }catch (Exception $ex){
+
+            return  \common::errorArray(1, "数据库操作失败", $ex);
+        }
+    }
+
+
 
     /**
      * 回复评价

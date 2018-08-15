@@ -1,0 +1,17 @@
+#selectLogoModal .modal-body{
+    text-align: center;
+}
+#selectLogoModal .modal-content .logo-option{
+    margin-bottom: 10px;
+}
+#selectLogoModal img{
+    max-width: 440px;
+    margin: 0 auto;
+    text-align: center;
+}
+#selectLogoModal .fx-logo{
+    margin-right: 50px;
+}
+.radio-inline input[type=radio]{
+    position: relative !important;
+}

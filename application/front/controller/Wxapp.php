@@ -27,6 +27,48 @@ class Wxapp extends Controller
         $this->lib_user = new UserModel();
     }
 
+    function getTocken(){
+        //1.先读取本地的文件看有没有保存小程序的tooken
+        $filename = __HOST__."/static/token.txt";
+        $token = file_get_contents($filename);
+
+            if(strlen($token) == 0){
+                $appid   = "wxfba00556cd93a6a5";
+                $secret     = "a60c26968102308b7600d3a0f48a75a6";
+                $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$appid."&secret=".$secret;
+                $result = Curl::callWebServer($url);
+                $handle = fopen('./static/token.txt', 'w+');
+                fwrite($handle, $result['access_token']);
+                fclose($handle);
+                echo json_encode(array('errorCode'=>0,'errorInfo'=>'获取token成功','data'=>$result['access_token']));
+
+            } else {
+                echo json_encode(array('errorCode'=>0,'errorInfo'=>'获取token成功','data'=>$token));
+            }
+
+
+
+
+    }
+
+
+
+    function getCode(){
+        $token = file_get_contents('./static/token.txt');
+        $page="pages/index/index";
+        $scene = "id:123";
+        $width='80';
+        $post_data='{"page":"'.$page.'","scene":"'.$scene.'","width":"'.$width.'"}';
+        $queryAction = 'POST';
+        $url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=".$token;
+        $method = "post";
+        $result = Curl::callWebServer($url, $post_data, $queryAction, 0);
+       var_dump($result);
+    }
+
+
+
+
     //*****************************************获取用户信息模块*********************************************
     /**
      * 微信小程序用户登录

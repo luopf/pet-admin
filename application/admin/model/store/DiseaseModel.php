@@ -39,6 +39,24 @@ class DiseaseModel extends Model
     }
 
 
+    /**
+    *   修改疾病咨询
+     */
+    public function updateDisease($condition,$upInfo){
+        $m_disease = Db::name('pet_doctor');
+        try{
+            $result = $m_disease->where($condition)->update($upInfo);
+            if(true == $result ){
+                return \common::errorArray(0, "修改成功", $result);
+            }else{
+                return \common::errorArray(1, "修改失败", $result);
+            }
+        }catch (Exception $ex){
+
+            return \common::errorArray(1, "数据库操作失败", $ex);
+        }
+    }
+
     /***
     * 查找单个疾病咨询
      */

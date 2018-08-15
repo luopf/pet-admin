@@ -11,6 +11,7 @@ namespace app\front\controller;
 use think\Controller;
 use app\front\model\NewsModel;
 use app\front\model\UserModel;
+
 class News extends  Controller
 {
 
@@ -42,6 +43,19 @@ class News extends  Controller
             $page['pageSize'] = 10;
         }
         return $page;
+    }
+
+    /**
+    *     用户已读所有消息
+     */
+    public function userReadNews(){
+        $user_id = input('user_id');
+        $result = $this->lib_new->findAllNews(array('user_id'=>$user_id));
+        foreach ($result['data'] as $new){
+            $new_id = $new['id'];
+            $this->lib_new->updateNews(array('id'=>$new_id),array('is_read'=>1));
+        }
+
     }
 
     /**
@@ -97,7 +111,22 @@ class News extends  Controller
         }
 
         $result = $this->lib_new->pagingNews($page,$conditionList,$sort);
-        \ChromePhp::INFO($result);
         echo json_encode($result);
     }
+
+    /**
+    *   查找当前用户的所有未读消息
+     */
+    function  getCountForUserNoRead(){
+        //$user_id = input('user_id');
+        $user_id = 1;
+        $result = $this->lib_new->findAllNews(array('user_id'=>$user_id,'is_read'=>0));
+        $count = 0;
+        foreach ($result['data'] as $new){
+            $count += 1;
+        }
+        //$result['totalCount'] = $count;
+        echo json_encode(array('errorCode'=>0,'errorInfo'=>'查找成功','data'=>$count));
+    }
+
 }

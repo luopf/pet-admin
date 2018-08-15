@@ -15,6 +15,9 @@ use app\admin\controller\BaseAdminController;
 use think\facade\Session;
 
 use app\admin\model\store\DiseaseModel;
+
+use app\admin\model\store\NewsModel;
+
 class Doctor extends BaseAdminController
 {
 
@@ -26,6 +29,7 @@ class Doctor extends BaseAdminController
         error_reporting ( E_ALL & ~ E_NOTICE & ~ E_DEPRECATED & ~ E_STRICT & ~ E_WARNING );
         $this->rightVerify(Session::get('admin'), __HOST__."/index.php/admin/login/login");
         $this->lib_disease = new DiseaseModel();
+        $this->lib_new = new NewsModel();
     }
 
 
@@ -35,11 +39,34 @@ class Doctor extends BaseAdminController
         echo  json_encode($result);
     }
 
-    /***
-    *  添加病例
-     */
-    public function addDisease(){
 
+
+
+    /**
+    *   管理员回复
+     */
+    public function adminReplay(){
+        $oid = input('oid');
+        $info = input('info');
+        $upInfo = array(
+            'is_replay' => 1,
+            'replay_content'=>$info
+        );
+        $result = $this->lib_disease->updateDisease(array('id'=>$oid),$upInfo);
+        $diseaseInfo = $this->lib_disease->findDisease(array('id'=>$oid));
+        $user_id = $diseaseInfo['data']['user_id'];
+        // 给用户添加消息记录
+        $newInfo = array(
+            'user_id'=>$user_id,
+            'type' => 4,
+            'status'=>0,
+            'add_time'=>\common::getTime(),
+            'time_desc'=>\common::getDescTime(),
+            'new_content'=>$info
+        );
+        $this->lib_new->addNew($newInfo);
+
+        echo json_encode($result);
     }
 
     /**
@@ -60,6 +87,7 @@ class Doctor extends BaseAdminController
             $diseaseInfo['data']['img_list'] = json_decode( $diseaseInfo['data']['img_list'],true);
         }
         $this->assign('diseaseInfo',$diseaseInfo['data']);
+        \ChromePhp::info($diseaseInfo['data']);
         $this->assign(config('config.view_replace_str'));
         return $this->fetch('diseaseDetail');
     }
@@ -89,7 +117,6 @@ class Doctor extends BaseAdminController
             array_push($conditionList,  array("field" => 'end_time',"operator" => '<=',"value" => input('end_time')));
         }
         $result = $this->lib_disease->pagingDisease($page,$conditionList,$sort);
-        \ChromePhp::INFO($result);
         echo json_encode($result);
     }
 

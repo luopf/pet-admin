@@ -80,6 +80,17 @@ class Comment extends Controller
     * 添加评论
      */
     public function addComment(){
+        // 判断用户是否被拉黑
+        $user_id = input('user_id');
+        $userInfo = $this->lib_user->findUser(array('id'=>$user_id));
+        if($userInfo['data']['defriend'] == 1){
+            echo json_encode(array(
+                'errorCode'=>2,
+                'errorInfo' =>'用户被拉黑',
+                'data'=> false
+            ));
+            die;
+        }
         $is_reply = input('is_reply');
         $cid = input('cid');
         $messageInfo = $this->lib_message->findMessage(array('id'=>input('mid')));

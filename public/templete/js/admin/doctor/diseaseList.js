@@ -133,7 +133,7 @@ $(function(){
                     $("#page-selection").bootpag({total:total,total_count:total_count});//重新计算总页数,总记录数
                     currentPage = result.data.pageInfo.current_page;
                     var myList = result.data.dataList;
-                    html+='<tr><th class="th1"><input type="checkbox" class="select-all my-icheckbox"></th><th class="th1">序号</th><th class="th2">用户名</th><th class="th3">宠物品种</th><th class="th4">联系方式</th><th class="th8">病情情况</th><th class="th9">发布时间</th><th class="th10">操作</th></tr>';
+                    html+='<tr><th class="th1"><input type="checkbox" class="select-all my-icheckbox"></th><th class="th1">序号</th><th class="th2">用户名</th><th class="th3">宠物品种</th><th class="th4">联系方式</th><th class="th8">病情情况</th><th class="th9">是否回复</th><th class="th9">发布时间</th><th class="th10">操作</th></tr>';
                     var colspan = $(html).find("th").length;
                     for(var i = 0; i < myList.length;i++){
                         var obj = myList[i];
@@ -146,13 +146,7 @@ $(function(){
 
                         var account = obj.account;//用户的account
 
-
-
                         var order_type_text = "--";
-
-
-
-
                          var addressInfo = obj.address_text ? obj.address_text:"--";
                         var totalprice = obj.total_price;
 
@@ -163,9 +157,15 @@ $(function(){
                         var oid = obj.id;
                         var paymethod = obj.pay_method;
                         var paymethod_text = "";
+                        var is_replay = obj.is_replay;// 是否回复
+                        var is_replay_text = '';
+                        if(parseInt(is_replay) == 0){// 未回复
+                            is_replay_text = "未回复";
+                        } else {// 已回复
+                            is_replay_text = "已回复";
+                        }
 
-
-                        var operation = orderOperatoin('1',oid);
+                        var operation = orderOperatoin('1',oid,is_replay);
 
                         var message = obj.message ? obj.message : "--";
                         var checked = (idList.indexOf(oid) >= 0) ? "checked":"";//判断当前记录先前有没有被选中
@@ -176,6 +176,7 @@ $(function(){
                             +'<td class="th3">'+cate_name+'</td>'
                             +'<td class="th4">'+phone+'</td>'
                             +'<td class="th8">'+content+'</td>'
+                            +'<td class="th9">'+is_replay_text+'</td>'
                             +'<td class="th9">'+add_time+'</td>'
                             +'<td>'+operation+'</td>'
                             +'</tr>';
@@ -194,6 +195,41 @@ $(function(){
                                 setMessageState(oid,2);
                             });
                         });
+
+                        // 回复按钮点击事件
+                        $(".adminreplay-message").click(function () {
+                            var oid = $(this).attr('oid');
+                            $("#myReplyModal").modal('show');//对话框显现
+                            $("#myReplyModal .btn-success").one('click',function(){//一次点击
+                                var info = $("#myReplyModal .modal-body .info").focus().val();//获取输入框的值
+
+                                if(info != ""){
+                                    $("#myReplyModal").modal('hide');//对话框显现
+                                    $.ajax({
+                                        async: async,
+                                        type: 'post',
+                                        url: host + '/index.php/admin/doctor/adminReplay',
+                                        data: {'oid':oid,'info':info},//从1开始计数
+                                        dataType: 'json',
+                                        success: function (result) {
+                                            if(result.errorCode == 0){// 回复评论成功
+                                                responseTip(result.errorCode,'回复成功',1000,function () {
+                                                    render(true,currentPage,pageSize);
+                                                })
+
+                                            } else { // 回复评论失败
+                                                responseTip(result.errorCode,'回复失败',1000,function () {
+                                                    render(true,currentPage,pageSize);
+                                                })
+                                            }
+                                        },
+                                        error: errorResponse
+                                    });
+                                }
+                            });
+
+                        });
+
                         //发货
                         $(".send-goods").click(function(){
                             var oid = $(this).attr('oid');
@@ -375,7 +411,7 @@ $(function(){
      * @param state 订单状态
      * @param oid 订单id
      */
-    function orderOperatoin(state,oid){
+    function orderOperatoin(state,oid,is_replay){
         var html = "";
         switch (state)
         {
@@ -387,6 +423,10 @@ $(function(){
             case '1'://已审核
             	html +="<a  href='javascript:;' oid ='"+ oid+"' class='btn btn-primary btn-xs modify-message'title='设置'>查看</a>";
                 html +="<a  href='javascript:;'  oid ='"+oid+"'  class='btn btn-danger btn-xs delete-message title='关闭消息'>删除</a>";
+                if(is_replay == 0){
+                    html +="<a  href='javascript:;'  oid ='"+oid+"'  class='btn btn-primary btn-xs adminreplay-message title='回复'>回复</a>";
+                }
+
                 break;
             case '2'://审核失败
             	html +="<a  href='javascript:;' oid ='"+ oid+"' class='btn btn-primary btn-xs modify-message'title='设置'>查看</a>";

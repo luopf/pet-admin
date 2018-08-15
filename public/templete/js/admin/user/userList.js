@@ -120,6 +120,55 @@ $(function(){
     }
 
     /**
+     * 拉黑
+     * */
+    function defriendfun() {
+        var id = $(this).attr("data-id");
+        let defriend = 1;
+        $.ajax({
+            url:host+"/index.php/admin/User/defriend",
+            type:"post",
+            data:{"id":id,'defriend':defriend},
+            dataType:"json",
+            success:function(json,statusText){
+                if(json.errorCode == 0){
+
+                    responseTip(json.errorCode,"操作成功！",1500,function(){render(true,currentPage,pageSize);});
+
+                }else{
+                    responseTip(json.errorCode,json.errorInfo,1500);
+                }
+            },
+            error:errorResponse
+        });
+    }
+    /**
+     * 洗白
+     * */
+    function whitefun() {
+        var id = $(this).attr("data-id");
+        let defriend = 0;
+        $.ajax({
+            url:host+"/index.php/admin/User/white",
+            type:"post",
+            data:{"id":id,'defriend':defriend},
+            dataType:"json",
+            success:function(json,statusText){
+                if(json.errorCode == 0){
+
+                    responseTip(json.errorCode,"操作成功！",1500,function(){render(true,currentPage,pageSize);});
+
+                }else{
+                    responseTip(json.errorCode,json.errorInfo,1500);
+                }
+            },
+            error:errorResponse
+        });
+    }
+
+
+
+    /**
      * 密码重置
      */
     function restPwd(){
@@ -192,7 +241,7 @@ $(function(){
                     currentPage = result.data.pageInfo.current_page;
                     var userList = result.data.dataList;
 
-                    html+='<tr><th class="th1">序号</th><th class="th2">头像</th><th class="th3">昵称</th><th class="th6">余额</th><th class="th6">姓名</th><th class="th5">性别</th><th class="th6">手机号</th><th class="th7">地址</th><th class="th10">关注时间</th><th class="th11">操作</th></tr>';
+                    html+='<tr><th class="th1">序号</th><th class="th2">头像</th><th class="th3">昵称</th><th class="th6">余额</th><th class="th6">姓名</th><th class="th5">性别</th><th class="th6">手机号</th><th class="th7">地址</th><th class="th10">关注时间</th><th class="th10">是否拉黑</th><th class="th11">操作</th></tr>';
                     var colspan = $(html).find("th").length;
                     for(var i = 0; i < userList.length;i++){
                         var obj = userList[i];
@@ -210,6 +259,13 @@ $(function(){
                         var points = obj.points;
                         var balance = obj.balance||'0';
                         var id = obj.id;
+                        var defriend = obj.defriend;
+                        var defriend_text = '';
+                        if(parseInt(defriend) == 0){
+                            defriend_text = "没有拉黑";
+                        } else {
+                            defriend_text = "已被拉黑";
+                        }
                         html+='<tr>'
                         		+'<td>'+number+'</td>'
                         		+'<td>'+(head_url?'<img width="50" src="'+head_url+'">':'无头像')+'</td>'
@@ -220,12 +276,20 @@ $(function(){
                         		+'<td>'+phone+'</td>'
                         		+'<td><span class="limit-text" title="'+addr+'">'+addr+'</span></td>'
 
-                        		//+'<td>'+subscribeTimes+'</td>'
+
                         		+'<td>'+subscribe_time+'</td>'
+                            +'<td>'+defriend_text+'</td>'
+
                         		+'<td>'
                         			//+'<a href="./admin.php?c=userManage&a=editUser&id='+id+'" class="btn btn-xs btn-primary">编辑</a>'
-                        			+'<a href="javascript:;" class="user-detail btn btn-xs btn-primary" data-id="'+id+'">查看</a>'
-                        		+'</td>'
+                        			+'<a href="javascript:;" class="user-detail btn btn-xs btn-primary" data-id="'+id+'">查看</a>';
+                                       if(parseInt(defriend) == 0){
+                                           html += '<a href="javascript:;" class="user-defriend btn btn-xs btn-danger" data-id="'+id+'">拉黑</a>';
+                                       }  else {
+                                           html += '<a href="javascript:;" class="user-white btn btn-xs btn-danger" data-id="'+id+'">取消拉黑</a>';
+                                       }
+
+                        html+='</td>'
                     		+'</tr>';
                     }
                     if(userList.length == 0){
@@ -234,6 +298,8 @@ $(function(){
                     $(".inner-section #list-table tbody").html(html);
                     $(".user-detail").click(userDetail);
                     $(".reset-pwd").click(restPwd);
+                    $(".user-defriend").click(defriendfun);
+                    $(".user-white").click(whitefun);
 
                 }else{
                     responseTip(result.errorCode,json.errorInfo,1500);

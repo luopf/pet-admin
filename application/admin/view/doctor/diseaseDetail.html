@@ -112,6 +112,29 @@
                         <td class="td3"></td>
                     </tr>
                     <tr>
+                        <td class="td1"><label><span class="must-tag">*</span>是否回复</label></td>
+                        <td class="td2">
+                            {if $diseaseInfo.is_replay == 0}
+                            未回复
+                            {else}
+                            已回复
+                            {/if}
+                        </td>
+                        <td class="td3"></td>
+                    </tr>
+                    <tr>
+                        <td class="td1"><label><span class="must-tag">*</span>回复内容</label></td>
+                        <td class="td2">
+                            {if $diseaseInfo.replay_content}
+                            {$diseaseInfo.replay_content}
+                            {else}
+                            --
+                            {/if}
+                        </td>
+                        <td class="td3"></td>
+                    </tr>
+
+                    <tr>
                         <td class="td1"><label><span class="must-tag">*</span>宠物照片</label></td>
                         <td class="td2">
                             {foreach $diseaseInfo.img_list as $img}

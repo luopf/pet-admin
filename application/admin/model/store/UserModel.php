@@ -19,6 +19,26 @@ class UserModel extends Model
 
 
     /**
+    *   修改用户信息
+     */
+    public function updataUser($condition,$userInfo){
+        $m_user = Db::name('base_user');
+        try{
+            $result = $m_user->where($condition)->update($userInfo);
+            if(true == $result ){
+                return \common::errorArray(0, "修改成功", $result);
+            }else{
+                return \common::errorArray(1, "修改失败", $result);
+            }
+        }catch (Exception $ex){
+
+            return  \common::errorArray(1, "数据库操作失败",$ex);
+        }
+    }
+
+
+
+    /**
     *添加用户
      */
     public function addUser($userInfo){

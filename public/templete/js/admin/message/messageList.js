@@ -236,7 +236,41 @@ $(function(){
                             var oid = $(this).attr('oid');
                             setOrderState(oid,5);
                         });
-                        
+                        // 回复按钮点击事件
+                        $(".message-replay").click(function () {
+                            var oid = $(this).attr('oid');
+
+                            $("#myReplyModal").modal('show');//对话框显现
+                            $("#myReplyModal .btn-success").one('click',function(){//一次点击
+                                var info = $("#myReplyModal .modal-body .info").focus().val();//获取输入框的值
+                                console.log(info);
+                                if(info != ""){
+                                    $("#myReplyModal").modal('hide');//对话框显现
+                                    $.ajax({
+                                        async: async,
+                                        type: 'post',
+                                        url: host + '/index.php/admin/comment/adminReplay',
+                                        data: {'oid':oid,'info':info},//从1开始计数
+                                        dataType: 'json',
+                                        success: function (result) {
+                                            if(result.errorCode == 0){// 回复评论成功
+                                                responseTip(result.errorCode,'回复成功',1000,function () {
+                                                    render(true,currentPage,pageSize);
+                                                })
+
+                                            } else { // 回复评论失败
+                                                responseTip(result.errorCode,'回复失败',1000,function () {
+                                                     render(true,currentPage,pageSize);
+                                                })
+                                            }
+                                        },
+                                        error: errorResponse
+                                    });
+                                }
+                            });
+
+                        });
+
                         //订单退款
                         $(".refund-order").click(function(){
                         	var oid = $(this).attr('oid');
@@ -248,7 +282,7 @@ $(function(){
                         //订单详情
                         $(".order-detail").click(function(){
                             var oid = $(this).attr("oid");
-                            window.location.href = "./admin.php?c=store_order&a=orderDetailList&oid="+oid;
+                            window.location.href = host+"/index.php/admin/message/messageDetail/id/"+oid;
                         });
                         //用户详情
                         $(".user-detail").click(function(){
@@ -406,6 +440,7 @@ $(function(){
             case '1'://已审核
             	html +="<a  href='javascript:;' oid ='"+ oid+"' class='btn btn-primary btn-xs modify-message'title='设置'>查看</a>";
                 html +="<a  href='javascript:;'  oid ='"+oid+"'  class='btn btn-danger btn-xs close-message title='关闭消息'>关闭</a>";
+                html +="<a  href='javascript:;'  oid ='"+oid+"'  class='btn btn-primary btn-xs message-replay title='关闭消息'>回复</a>";
                 break;
             case '2'://审核失败
             	html +="<a  href='javascript:;' oid ='"+ oid+"' class='btn btn-primary btn-xs modify-message'title='设置'>查看</a>";

@@ -47,7 +47,6 @@ class Comment extends  BaseAdminController
         $conditionList = $this->getPagingList($this, $keyValueList);
         $sort = "is_reply asc,add_time desc";
         $result =  $this->lib_comment->pagingComment($page, $conditionList, $sort);
-        \ChromePhp::INFO($result);
         echo json_encode($result);
     }
 
@@ -60,6 +59,31 @@ class Comment extends  BaseAdminController
         echo json_encode($result);
     }
     /**
+    *   管理员回复
+     */
+    function adminReplay(){
+        $oid = input('oid');
+        $info = input('info');
+        $message = $this->lib_message->findMessage(array('id'=>$oid));
+        $mid = $message['data']['id'];// mid
+        $mess_num = $message['data']['mess_num'];//mess_num
+        $content = $info;//content
+        $user_id = 'admin';
+        $nick_name = '管理员';
+        $add_time = \common::getTime();
+        $commentInfo = array(
+            'mid' => $mid,
+            'mess_num' =>$mess_num,
+            'content' => $content,
+            'user_id' => $user_id,
+            'nick_name'=> $nick_name,
+            'add_time' => $add_time,
+        );
+        $result = $this->lib_comment->addComment($commentInfo);
+        echo json_encode($result);
+    }
+
+    /**
      * 评价详情页面
      */
     function commentDetail(){
@@ -70,7 +94,6 @@ class Comment extends  BaseAdminController
         $mid = $result['data']['mid'];
         $message = $this->lib_message->findMessage(array('id'=>$mid));
         $this->assign('messageInfo',$message['data']);
-        \ChromePhp::INFO($message['data'],11);
         if($result['data']['is_reply'] == 1){// 已回复
             $reply_account = $result['data']['reply_account'];
             $replay_user = $this->lib_user->findUser(array('id'=>$reply_account));
@@ -80,6 +103,9 @@ class Comment extends  BaseAdminController
         $this->assign(config('config.view_replace_str'));
         return $this->fetch('commentDetail');
     }
+
+    
+
 
     /**
      * 单个回复评价

@@ -36,7 +36,7 @@ class Doctor extends Controller
             array_push($img_list,array('image'=>$img['img_url'],'thumb'=>strstr($img['img_url'],'.jpg',true)."_thumb.jpg"));
         }
         $diseaseInfo['img_list'] = stripslashes(json_encode($img_list));
-      
+        $diseaseInfo['add_time'] = \common::getTime();
         $result = $this->lib_disease->addDisease($diseaseInfo);
         echo json_encode($result);
 

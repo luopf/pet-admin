@@ -41,8 +41,40 @@ class NewsModel extends Model
             return \common::errorArray(1, "数据库操作失败", $ex);
         }
     }
+    /**
+    *   根据条件查找所有的消息
+     */
+    public function findAllNews($conditions){
+        $m_new = Db::name('app_message');
+        try{
+            $result = $m_new->where($conditions)->select();
+            if(true == $result ){
+                return \common::errorArray(0, "成功", $result);
+            }else{
+                return \common::errorArray(1, "添加失败", $result);
+            }
+        }catch (Exception $ex){
 
+            return \common::errorArray(1, "数据库操作失败", $ex);
+        }
+    }
+    /***
+    *   修改消息
+     */
+    function updateNews($condition,$updateInfo){
+        $m_new = Db::name('app_message');
+        try{
+            $result = $m_new->where($condition)->update($updateInfo);
+            if(true == $result ){
+                return \common::errorArray(0, "修改成功", $result);
+            }else{
+                return \common::errorArray(1, "修改失败", $result);
+            }
+        }catch (Exception $ex){
 
+            return \common::errorArray(1, "数据库操作失败", $ex);
+        }
+    }
 
     /**
      * 分页查找消息

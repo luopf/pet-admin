@@ -69,6 +69,17 @@ class Message extends  Controller
 
     // 发布消息
     public function addMessage(){
+        // 判断用户是否未正常用户或者被拉黑用户
+        $user_id = input('user_id');
+        $userInfo = $this->lib_user->findUser(array('id'=>$user_id));
+        if($userInfo['data']['defriend'] == 1){// 被拉黑用户
+            echo json_encode(array(
+                'errorCode'=>2,
+                'errorInfo' =>'用户被拉黑',
+                'data'=> false
+            ));
+           die;
+        }
         $labelInfo = $this->lib_label->findLabel(array('id'=>input('label_id')));
         $userInfo = $this->lib_user->findUser(array('id'=>input('user_id')));
         $messageInfo = $this->getArgsList($this,array('user_id','label_id','text_content','longitude','latitude','city','phone','wx_number','address_text','pet_name','pet_cate','pet_age','pet_sex'));

@@ -25,6 +25,7 @@ require __DIR__ . '/../extend/UtilImage.php';
 
 // 应用入口文件
 define('APP_PATH', __DIR__ . '/app/');
+define('WECHAT', __DIR__ . '/wechatUtil/');
 define('CSS', __DIR__ . '/../public/static');
 
 // 后台配置文件
@@ -40,7 +41,7 @@ define('ADMIN_IMAGES_PATH', __DIR__ . '/../application/admin/config/common/image
 
 define('__PUBLIC__', __DIR__ . '/../public');
 
-define('__HOST__','https://cwly.mengyayuer.com');
+define('__HOST__','http://192.168.235.1/pet/public');
 
 define('APP_AUTO_BUILD',true); //开启自动生成
 

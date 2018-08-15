@@ -37,6 +37,27 @@ class User extends  BaseAdminController
         return $this->fetch('userList');
     }
 
+    /**
+    *       拉黑用户
+     */
+    public function defriend(){
+        $id = input('id');
+        $defriend = input('defriend');
+        $result = $this->lib_user->updataUser(array('id'=>$id),array('defriend'=>$defriend));
+        echo json_encode($result);
+    }
+    /**
+    *   洗白用户
+     */
+    public function white(){
+        $id = input('id');
+        $defriend = input('defriend');
+        $result = $this->lib_user->updataUser(array('id'=>$id),array('defriend'=>$defriend));
+        echo json_encode($result);
+    }
+
+
+
     public function pagingUser(){
         $page = $this->getPageInfo($this);
         $keyValueList = array('name'=>'like','nick_name'=>'like','subscribe'=>'=','country'=>'like','province'=>'like','city'=>'like','phone'=>'=','sex'=>'=','remark'=>'like','from_add_time'=>'>=','to_add_time'=>'<=');
